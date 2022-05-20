@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\User;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,22 +17,9 @@ use App\User;
 Route::get('/', function () {
     return view('welcome');
 
-    // Testing sqlite works, using the users table
-    // User::updateOrCreate([
-    //     'email' => 'jdoe@gmail.com'
-    // ],[
-    //     'name' => 'John Doe',
-    //     'email' => 'jdoe@gmail.com',
-    //     'password' => bcrypt('password')
-    // ]);
-
-    // $users = User::all();
-
-    // print_r($users);
-
 });
 
 // Routes
 Route::get('/orders', 'ProductController@getOrders')->name('getOrders');
-Route::get('/getSingleOrder/{id}', 'ProductController@getSingleOrder')->name('getSingleOrder');
-Route::get('/getOrderDetails/{id}', 'ProductController@getOrderWithDetails')->name('getOrderWithDetails');
+Route::get('/single_order/{id}', 'ProductController@getSingleOrder')->name('getSingleOrder');
+Route::get('/order_details/{id}', 'ProductController@getOrderWithDetails')->name('getOrderWithDetails');

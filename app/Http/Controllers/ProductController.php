@@ -41,14 +41,29 @@ class ProductController extends Controller
         }
     }
 
+    /**
+     * Get a list of 'order_details'
+     * @return \Illuminate\Http\Response
+     */
     public function getOrderWithDetails($id) {
-        $order = DB::select('SELECT * FROM `order_details` WHERE `order_id` = ?', [$id]);
-        if($order) {
-            // order is found, return the result
-            return response()->json(['message' => 'success', 'data' => $order]);
+        // $order = DB::select('SELECT * FROM `order_details` WHERE `order_id` = ?', [$id]);
+        // if($order) {
+        //     // order is found, return the result
+        //     return response()->json(['message' => 'success', 'data' => $order]);
+        // } else {
+        //     // order not found, show error flag
+        //     return response()->json(['status' => 'failed', 'message' => 'Order Details Not Found..']);
+        // }
+
+        // assuming "order_details" table exists with foreign key "order_id"
+        $order_details = DB::table('order')
+            ->join('orders', 'order.id', '=', 'order_detail.order_id')
+            ->select('order.*', 'order_details.order_id', 'orders.id')
+            ->get();
+        if($order_details) {
+
         } else {
-            // order not found, show error flag
-            return response()->json(['status' => 'failed', 'message' => 'Order Details Not Found..']);
+            return response()->json(['status' => 'error', 'message' => 'Record not found..']);
         }
     }
 
